@@ -50,4 +50,12 @@
       <Filter>Annexe</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="annexe\voitour.mp4">
+      <Filter>Annexe</Filter>
+    </Media>
+    <Media Include="annexe\voitour_dour.mp4">
+      <Filter>Annexe</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

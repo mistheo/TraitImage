@@ -159,6 +159,10 @@
     <Image Include="annexe\Image8Balles.png" />
     <Image Include="annexe\Image9Balles.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="annexe\voitour.mp4" />
+    <Media Include="annexe\voitour_dour.mp4" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

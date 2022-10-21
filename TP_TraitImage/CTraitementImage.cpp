@@ -62,13 +62,47 @@ Mat CTraitementImage::erosion(Mat& imgOri)
 				}
 			}
 
-			if (cptNbNoir > 1) setPixel(imgRetour, i, j, NOIR);
-			else setPixel(imgRetour, i, j, BLANC);
+			if (cptNbNoir > 1) 
+				setPixel(imgRetour, i, j, NOIR);
+			else 
+				setPixel(imgRetour, i, j, BLANC);
 
 			cptNbNoir = 0;
 		}
 	}
 	return imgRetour;
+}
+
+Mat CTraitementImage::contour(Mat& imgOri)
+{
+	Mat imgDebase = imgOri.clone();
+	cvtColor(imgOri, imgDebase, COLOR_RGB2GRAY);//converti l'image en grisée (1octet qui definit le niveau de gris)
+	Mat imgRetour = imgDebase.clone();
+
+	int resPixel = 0;
+
+	for (int i = 1; i < imgRetour.rows - 1; i++)//pour chaque ligne
+	{
+		for (int j = 1; j < imgRetour.cols - 1; j++)//pour chaque colonne
+		{
+			//std::cout << "--------------------------------------" << std::endl;
+			resPixel += getPixel(imgDebase, i-1, j)*1;//haut
+			resPixel += getPixel(imgDebase, i+1, j)*1;//bas
+			resPixel += getPixel(imgDebase, i, j)*-4;//pixel actuel
+			resPixel += getPixel(imgDebase, i, j-1)*1;//gauche
+			resPixel += getPixel(imgDebase, i, j+1)*1;//droite
+			// noubeau pixel = case du haut +  case du bas + case de droite + case de guache + case actuel*-4
+
+			if (resPixel > BLANC) resPixel = BLANC;//le pixel ne peut pas etre plus blanc que blanc
+			if (resPixel < NOIR) resPixel = NOIR;//le pixel ne peut pas etre plus noir que noir
+			
+			setPixel(imgRetour, i, j, resPixel); //std::cout << "Pixel mis en place: " << i << ',' << j << " resPixel: " << resPixel << std::endl;
+			resPixel = 0;
+		}
+	}
+
+	return imgRetour;
+
 }
 
 Mat CTraitementImage::dilatation(Mat& imgOri)

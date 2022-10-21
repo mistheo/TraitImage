@@ -20,6 +20,7 @@ class CTraitementImage
 
 		Mat binarisation(Mat& imgOrig,int seuil);
 		Mat erosion(Mat&);
+		Mat contour(Mat&);
 		Mat dilatation(Mat&);
 		int cptPixBlanc(Mat&);
 		void setPixel(Mat& imgOrig, int l, int c, int color);
