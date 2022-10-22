@@ -21,57 +21,43 @@ int main()
         imgBina,
         imgEros,
         imgDila,
+        imgGray,
         imgCont;
 
     VideoCapture
-        cap("annexe/voitour_dour.mp4");
+        video("annexe/voiture5.mp4");
 
     if (img.empty()) return -1;
-    if (!cap.isOpened()) return -1;
+    if (!video.isOpened()) return -1;
 
+    //---------------------- Traitement Image avec binarisation ----------------------//
+    //imgBina = traitImg.binarisation(img,190);
+    //imgEros = traitImg.erosion(imgBina);
+    //for(int k = 1; k < 2; k++)
+    //    imgEros = traitImg.erosion(imgEros);
+    //
+    //imgDila = traitImg.dilatation(imgEros);
+    //for (int k = 1; k < 5; k++)
+    //    imgDila = traitImg.dilatation(imgDila);
     
-   //imgBina = traitImg.binarisation(img,190);
-   //imgEros = traitImg.erosion(imgBina);
-   //for(int k = 1; k < 2; k++)
-   //    imgEros = traitImg.erosion(imgEros);
-   //
-   //imgDila = traitImg.dilatation(imgEros);
-   //for (int k = 1; k < 5; k++)
-   //    imgDila = traitImg.dilatation(imgDila);
-   //
     
     //imshow("Image Origine", img);
     //imshow("Image Erode", imgEros);
     //imshow("Image Binarise", imgBina);
     //imshow("Image Dilatation", imgDila);
+    //std::cout << "--------------> Nombre de balles sur l'image: " << traitImg.cptPixBlanc(imgDila) / 4500 << std::endl;
+
+
+    //---------------------- Traitement Image avec les contours ----------------------//
+    //imgCont = traitImg.contour(img);
     //imshow("Image Contour", imgCont);
+   
 
-      // Check if camera opened successfully
-    if (!cap.isOpened()) {
-        std::cout << "Error opening video stream or file" << std::endl;
-        return -1;
-    }
 
-    do{
+    //---------------------- Traitement Image avec Pixels moyens ----------------------//
+    Mat imgMoy = traitImg.pixelMoyen(video);
+    imshow("Image Pixel Moyen", imgMoy);
 
-        // Capture frame-by-frame
-        cap >> img;
-        imshow("Films de base", img);
-
-        // Display the resulting frame
-        imshow("Films binaire", traitImg.binarisation(img,150));
-
-    } while (waitKey(1)!='q');
-
-    // When everything done, release the video capture object
-    cap.release();
-
-    // Closes all the frames
-    destroyAllWindows();
-
-    //std::cout << "-------------------> Nombre de balles dans l'image: " << traitImg.cptPixBlanc(imgDila) / 4500 << std::endl;
     waitKey(0);
-
-
     return 0;
 }

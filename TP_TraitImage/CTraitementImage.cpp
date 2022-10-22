@@ -5,11 +5,9 @@ const uchar BLANC = 255, NOIR = 0;
 CTraitementImage::CTraitementImage()
 {
 }
-
 CTraitementImage::~CTraitementImage()
 {
 }
-
 Mat CTraitementImage::binarisation(Mat& imgOrig, int seuil)
 {
 	Mat imgRetour = imgOrig.clone();
@@ -72,7 +70,6 @@ Mat CTraitementImage::erosion(Mat& imgOri)
 	}
 	return imgRetour;
 }
-
 Mat CTraitementImage::contour(Mat& imgOri)
 {
 	Mat imgDebase = imgOri.clone();
@@ -105,6 +102,34 @@ Mat CTraitementImage::contour(Mat& imgOri)
 
 }
 
+Mat CTraitementImage::pixelMoyen(VideoCapture& video)
+{
+	bool fstImg = true;
+	
+	Mat img, imageGray, imgMoy;
+
+	// Capture frame-by-frame
+	for (int i = 1; i < 100;i++)
+	{
+		video >> img;
+		if (img.empty()) break;
+
+		cvtColor(img, imageGray, COLOR_RGB2GRAY);
+
+		if (fstImg == true)//si c'est la première image
+			cvtColor(img, imgMoy, COLOR_RGB2GRAY);
+
+		imgMoy += imageGray;
+		imgMoy = imgMoy / 2;
+
+		if (fstImg == true) fstImg = false;
+
+	}
+
+
+	return imgMoy;
+}
+
 Mat CTraitementImage::dilatation(Mat& imgOri)
 {
 	Mat imgRetour = imgOri.clone();
@@ -132,7 +157,6 @@ Mat CTraitementImage::dilatation(Mat& imgOri)
 
 	return imgRetour;
 }
-
 int CTraitementImage::cptPixBlanc(Mat& imgOri)
 {
 	int cpt = 0;
@@ -146,14 +170,11 @@ int CTraitementImage::cptPixBlanc(Mat& imgOri)
 
 	return cpt;
 }
-
-
 void CTraitementImage::setPixel(Mat& imgOrig, int l, int c, int color)
 {
 	uchar* ptr = imgOrig.ptr();
 	*(ptr + (l * imgOrig.cols + c)) = color;
 }
-
 uchar CTraitementImage::getPixel(Mat& imgOrig, int l, int c)
 {
 	return imgOrig.at<uchar>(l, c);
